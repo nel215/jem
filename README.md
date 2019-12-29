@@ -1,5 +1,8 @@
 ## Example
 
+```
+$ python main.py
+```
 ![joint](./assets/joint.gif)
 
 ## References
