@@ -90,7 +90,7 @@ def main():
     mcmc_sampler = MCMCSampler(model, num_sgld_step)
     batchsize = 128
     xent = nn.CrossEntropyLoss()
-    for epoch in range(100):
+    for epoch in range(50):
         index = np.random.permutation(n)
         losses = []
         for start in range(0, n, batchsize):
@@ -124,14 +124,14 @@ def main():
         X_sample = X_sample.to(device)
         X_sample = mcmc_sampler.sample(X_sample)
         X_sample = X_sample.cpu().numpy()
-        plt.figure(figsize=(5, 5))
+        plt.figure(figsize=(3, 3))
         ax = plt.subplot(111)
-        ax.set_xlim((-5, 5))
-        ax.set_ylim((-5, 5))
+        ax.set_xlim((-4, 4))
+        ax.set_ylim((-4, 4))
         sns.kdeplot(X_sample[:, 0], X_sample[:, 1], ax=ax)
         ax.scatter(X_sample[:, 0], X_sample[:, 1], s=1)
-        ax.set_title('Joint Distribution')
-        path = Path('results')/f'{epoch:03d}.png'
+        ax.set_title(f'Joint Distribution (epoch={epoch:02d})')
+        path = Path('results')/f'{epoch:02d}.png'
         path.parent.mkdir(exist_ok=True)
         plt.savefig(path)
         plt.close()
